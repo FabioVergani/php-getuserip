@@ -6,17 +6,13 @@
  <body>
 <?php
 function get_user_ip(){
- $f=filter_var;
- $o=&$_SERVER;
- $b=FILTER_VALIDATE_IP;
- $i='HTTP_CLIENT_IP';
- $r=$o[$i];
- if(!$f($r,$b)){$i='HTTP_X_FORWARDED_FOR';$r=$o[$i];if(!$f($r,$b)){$i='REMOTE_ADDR';$r=$o[$i];};};
- return array($r,$i);
+ $r=null;
+ function f(&$m,$i){$v=$_SERVER[$i];$m[0]=$v;$m[1]=$i;return !filter_var($v,275);};//FILTER_VALIDATE_IP
+ if(f($r,'HTTP_CLIENT_IP')){if(f($r,'HTTP_X_FORWARDED_FOR')){f($r,'REMOTE_ADDR');};};
+ return $r;
 };
-//
-$ip=get_user_ip();
-echo($ip[0].'-'.$ip[1]);
+
+//trace(get_user_ip());
 ?>
  </body>
 </html>
